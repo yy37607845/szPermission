@@ -40,7 +40,7 @@ router.post('/getProjectMenuByOrgId', function(req, res, next){
   "left join sz_project b on a.project_id = b.id where a.org_id = '" + orgId + "'";
 
   var allSql = "select a.id as projectId, a.name as projectName from sz_project a"
-  if(userId == '2222'){
+  if(userId == '8930767'){
     query(allSql, function(err, vals, fields){
       if(err){
         console.log(err)

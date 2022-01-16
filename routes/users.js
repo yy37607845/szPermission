@@ -23,7 +23,7 @@ router.post('/login', function (req, res, next) {
       if (vals == '') {
         console.log('没有该人员')
       } else {
-        if(data.userName == '2222'){
+        if(data.userName == '8930767'){
           var userInfo = {
             userId: vals[0].objno,
             userName: vals[0].objname,
