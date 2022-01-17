@@ -5,8 +5,10 @@ const jwt = require('jsonwebtoken');
 
 //获取所有岗位
 router.get('/getAllStation', function (req, res, next) {
-    var sql = 'select a.objname as stationName, b.objname as orgName from sz_station a ' +
-    " left join sz_org b on a.orgid = b.id where a.objname != '' order by b.objname "
+    // var sql = 'select a.objname as stationName, b.objname as orgName from sz_station a ' +
+    // " left join sz_org b on a.orgid = b.id where a.objname != '' order by b.objname "
+    var sql = 'select objname as stationName,code from sz_station ' +
+    " where objname != '' "
     query(sql, function (err, vals, fields) {
       if (err) {
         console.log(err);
@@ -19,9 +21,11 @@ router.get('/getAllStation', function (req, res, next) {
 //根据职位名称搜索
 router.post('/queryStationByName', function(req, res, next){
     var stationName = req.body.stationName;
-    var sql = 'select a.objname as stationName, b.objname as orgName from sz_station a ' +
-    " left join sz_org b on a.orgid = b.id where a.objname != '' and a.objname like  '%" + stationName + "%'"
-    + ' order by b.objname '
+    // var sql = 'select a.objname as stationName, b.objname as orgName from sz_station a ' +
+    // " left join sz_org b on a.orgid = b.id where a.objname != '' and a.objname like  '%" + stationName + "%'"
+    // + ' order by b.objname '
+    var sql = 'select objname as stationName,code from sz_station ' +
+    " where objname != '' and objname like  '%" + stationName + "%'";
     query(sql, function(err, vals, fields){
         if(err){
             console.log(err);
