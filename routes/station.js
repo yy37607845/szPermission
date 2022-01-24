@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 router.get('/getAllStation', function (req, res, next) {
     // var sql = 'select a.objname as stationName, b.objname as orgName from sz_station a ' +
     // " left join sz_org b on a.orgid = b.id where a.objname != '' order by b.objname "
-    var sql = 'select objname as stationName,code from sz_station ' +
+    var sql = 'select objname as stationName,id as code from sz_station ' +
     " where objname != '' "
     query(sql, function (err, vals, fields) {
       if (err) {
@@ -24,7 +24,7 @@ router.post('/queryStationByName', function(req, res, next){
     // var sql = 'select a.objname as stationName, b.objname as orgName from sz_station a ' +
     // " left join sz_org b on a.orgid = b.id where a.objname != '' and a.objname like  '%" + stationName + "%'"
     // + ' order by b.objname '
-    var sql = 'select objname as stationName,code from sz_station ' +
+    var sql = 'select objname as stationName,id as code from sz_station ' +
     " where objname != '' and objname like  '%" + stationName + "%'";
     query(sql, function(err, vals, fields){
         if(err){
@@ -43,6 +43,26 @@ router.get('/getAllStationSome', function(req, res, next){
       console.log(err)
     }else{
       res.json(vals)
+    }
+  })
+})
+
+//新OA 获取部门字段
+router.get('/getNewAllStation', function(req, res, next){
+  var sql = 'select id,objname from sz_station '
+  query(sql, function(err, vals, fields){
+    if(err){
+      console.log(err)
+    }else{
+      var data = [];
+            for (var i = 0; i < vals.length; i++) {
+                var one = {
+                    value: vals[i].id,
+                    label: vals[i].objname
+                }
+                data.push(one)
+            }
+            res.json(data);
     }
   })
 })

@@ -452,6 +452,36 @@ function computedMenuData (array) {
     return treeData;
   };
 
+
+
+//大屏 获取新OA 权限配置  -- 获取岗位
+router.post('/getNewStationPermission', function(req, res, next){
+    var artId = req.body.artId; //大屏主键id
+
+    var sql = " select DISTINCT a.id, a.objname from sz_station a " + 
+    "left join sz_user b on a.id = b.mainstation " + 
+    "left join sz_rel_org_project c on c.org_id = b.orgid " + 
+    "left join sz_rel_art_project d on c.project_id = d.project_id where d.art_id = " + artId;
+
+    query(sql, function(err, vals, fields){
+        if(err){
+            console.log(err)
+        }else{
+            var data = [];
+            for (var i = 0; i < vals.length; i++) {
+                var one = {
+                    value: Number(vals[i].id),
+                    label: vals[i].objname
+                }
+                data.push(one)
+            }
+            // var result = {code: '0', msg: '设置权限成功', data: data}
+            // res.json(result);
+            res.json(data)
+        }
+    })
+})  
+
 router.post('/setPermission', function(req, res, next){
     var artId = req.body.artId;
     var stationArr = req.body.stationArr;

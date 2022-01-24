@@ -63,8 +63,13 @@ router.post('/getProjectMenuByOrgId', function(req, res, next){
 
 router.post('/getArtTableByProjectId', function(req, res, next){
   var projectId = req.body.projectId;
+  var stationId = req.body.stationId;
+  // var sql = "select b.publish_id as publishId,b.name as artName from sz_rel_art_project a " +
+  // "left join sz_art b on a.art_id = b.id where a.project_id = '" + projectId + "'"
   var sql = "select b.publish_id as publishId,b.name as artName from sz_rel_art_project a " +
-  "left join sz_art b on a.art_id = b.id where a.project_id = '" + projectId + "'"
+  "left join sz_art b on a.art_id = b.id " + 
+  "left join sz_permission c on a.art_id = c.art_id " + 
+  "where a.project_id = '" + projectId + "' and c.station_id = '" + stationId + "'";
   query(sql, function(err, vals, fields){
     if(err){
       console.log(err)
